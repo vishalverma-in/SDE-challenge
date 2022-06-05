@@ -1,0 +1,44 @@
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        vector<vector<int>> ind2d;
+        
+        for(int i = 0; i < n; i++)
+        {     
+            for(int j = 0; j < matrix[i].size(); j++)
+            {
+                if(matrix[i][j]==0){
+                    ind2d.push_back({i,j});
+                }
+            }
+        }
+        
+        int rows = 0, cols = 0;
+        rows = matrix.size();
+        cols = matrix[0].size();
+        
+        for(int i = 0; i < ind2d.size(); i++)
+        {
+            int m = ind2d[i][0];
+            int n = ind2d[i][1];
+            
+            for(int p = 0; p < cols; p++)
+            {
+                matrix[m][p] = 0;
+            }
+            for(int q = 0; q < rows; q++)
+            {
+                matrix[q][n] = 0;
+            }
+        }
+    }
+};
+
+
+/*Approach:
+1. Declare a 2d vector ind2d to store the indices where 0 occured in the matrix 2d array;
+2. Interate through this ind2d, there will be two valued vector at each index.
+3. At first value iterate it till the column size of matri with index at 2nd place from 0 to column size and make all values to 0;
+4. At second value iterate it till the row size of matrix with index at 2nd place from 0 to row size and make all values to 0;
+*/
