@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        vector<vector<int>> res;
+        sort(nums.begin(), nums.end());
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = i+1; j < n; j++)
+            {
+                long long int a = nums[i];
+                long long int b = nums[j];
+                long long int rem = target-(a+b);
+                int left = j+1;
+                int right = n-1;
+                while(left < right)
+                {    
+                    long long int c = nums[left];
+                    long long int d = nums[right];
+                    long long int sum = c+d;
+                    if(sum==rem)
+                    {
+                        res.push_back({int(a), int(b), int(c), int(d)});
+                        left++;
+                        right--;
+                        
+                        while(left < right && nums[left]==nums[left-1]) left++;
+                        while(left < right && nums[right]==nums[right+1]) right--;
+                    }
+                    else if(sum < rem) left++;
+                    else right--;
+                }
+                while(j+1 < n && nums[j+1]==nums[j]) j++;
+            }
+            while(i+1 < n && nums[i+1]==nums[i]) i++;
+        }
+        return res;
+    }
+};
+
+/* Approach:
+1. Sort the array in ascending order.
+2. Take 4 pointer i at 0, j at i+1, left at j+1, right at n-1;
+3. Add element at index i and j and subtract it from target to get the remaining sum.
+4. with left and right pointers use 2sum approach to calculate the remaining sum.
+5. if element is found push all the element at four pointers in the 2dvector result and do left++ and right-- and also use two while loops to skip if elements are repeating at index left and right;
+6. Use two while loops more to skip the repeating elements at the index i and j;
+*/

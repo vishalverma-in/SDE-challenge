@@ -1,0 +1,30 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode* slow = head, *fast = head;
+        if(head==NULL || head->next == NULL) return false;
+        while(fast->next && fast->next->next)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow==fast) return true;
+        }
+        return false;
+    }
+};
+
+/* Approach:
+1. Move slow by one step and fast by two steps;
+2. If there is no cycle in the list then the fast will reach the NULL;
+3. If there is a cycle and after some iterations fast will be equal to the slow;
+
+this algorithm is call hare and tortoise algo.
+*/

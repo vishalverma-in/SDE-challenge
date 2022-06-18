@@ -1,0 +1,31 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode* p = headA;
+        ListNode* q = headB;
+        if(p==NULL || q==NULL) return NULL;
+        
+        while(p!=NULL && q!=NULL && p!=q)
+        {
+            p = p->next;
+            q = q->next;
+            if(p==q) return p;
+            if(p == NULL) p = headB;
+            if(q == NULL) q = headA;
+        }
+        return p;
+    }
+};
+
+/* Approach:
+1. Take two pointers p and q on headA and headB respectively;
+2. If both have different distance to skip in order to reach the common node then to remove this difference when one of the node will reach the end we will assign that pointer to the start of the other list and when the when longest list will reach the null then we will assign it to the start of the shorter list, till then the difference to reach the common node of both the pointers will be same and we can get the common node;
+*/

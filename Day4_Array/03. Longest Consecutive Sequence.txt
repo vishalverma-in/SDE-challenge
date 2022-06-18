@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        int n = nums.size();
+        //all unique elemenets will be remained in the set;
+        unordered_set<int> st;
+        for(auto num: nums)
+            st.insert(num);
+        
+        // it will count the length of longest concecutive sequence;
+        int maximum = 0;
+        /*iterate the nums array and do not perform any operation if nums[i]-1 element exists in the array. because we are aiming to find the minimum element from which we can start the iteration of finding the longest consecutive sequence in the array*/
+        
+        for(int i = 0; i < n; i++)
+        {
+            /*this if condition will check whether the nums[i]-1 th element exists or not, if it does not exists then we will set the current count to 1 and current num to nums[i]*/
+            if(!st.count(nums[i]-1))
+            {
+                int cCount = 1;
+                int cNum = nums[i];
+                /*This loop will be true when current num + 1 is present in the set and count the current sequence length*/
+                while(st.count(cNum+1))
+                {
+                    cCount++;
+                    cNum++;
+                }
+                maximum = max(maximum, cCount);
+            }
+        }
+        return maximum;
+    }
+};

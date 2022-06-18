@@ -1,0 +1,91 @@
+vector<int> Solution::repeatedNumber(const vector<int> &A) {
+    int n = A.size();
+    int xor1;
+    int x = 0, y = 0;
+    // xor1 is initializes to first element of the array;
+    xor1 = A[0];
+    // this loop will calculate the xor of all elements in the array 
+    for(int i = 1; i < n; i++)
+        xor1 = xor1 ^ A[i];
+    // here xor the arrays xor result with numbers from 1 to n, the similar numbers 
+    // will be cancelled out we will get the xor of missing and repeating number
+    for(int i = 1; i <= n; i++)
+        xor1 = xor1 ^ i;
+    /* Get the rightmost set bit in set_bit_no 
+    and will get the rightmost set bit */
+    int set_bit_no = xor1 & ~(xor1-1);
+    /* Now divide elements into two sets by comparing a rightmost set bit
+       of xor1 with the bit at the same position in each element.
+       Also, get XORs of two sets. The two XORs are the output elements.
+       The following two for loops serve the purpose */
+    for(int i = 0; i < n; i++)
+    {
+        if(A[i] & set_bit_no)
+         /* A[i] belongs to first set */
+            x = x ^ A[i];
+        else
+         /* A[i] belongs to second set */
+            y = y ^ A[i];
+    }
+    /* Now xor from 1 to n and take xor of set_bit_no in one bucket and other in other
+    bucker */
+    
+    for(int i = 1; i <= n; i++)
+    {
+        if(i & set_bit_no)
+        /* i belongs to first set */
+            x = x ^ i;
+        else
+        /* i belongs to second set */
+            y = y ^ i;
+    }
+    /* after that our missing number is in one set and the repeating number is in other,
+    let's find in which set they are*/  
+    int m_cnt = 0; 
+    for(int i = 0; i < n; i++)
+    {
+        if(A[i] == x)
+            m_cnt++;
+    }
+
+    if(m_cnt == 0) return {y,x};
+
+    return {x,y};
+}
+
+
+/*
+vector<int>missing_repeated_number(const vector<int> &A) {
+    long long int len = A.size();
+    // here S contains sum of numbers from 1 to n;
+    long long int S = (len * (len+1) ) /2;
+    // here P contains the sum of square of numbers from 1 to n;
+    long long int P = (len * (len +1) *(2*len +1) )/6;
+    long long int missingNumber=0, repeating=0;
+     // This loop will subtract array elements from S and P in the form,
+     // minus array element from S and square of element from P
+    for(int i=0;i<A.size(); i++){
+       S -= (long long int)A[i];
+       P -= (long long int)A[i]*(long long int)A[i];
+    }
+     // Here: missingNumber - repeatingNumber = S, ----(1)
+     // square(missingNumber - repeatingNumber) = P; ----(2)
+     // (missingNumber + repeatingNumber) = P/S; ----(3)
+     // From eqn-3: repeatingNumber = P/S - missingNumber;
+     // Put eqn-3 value in eqn-1 we get;
+     // missingNumber - P/S + missingNumber = S;
+     // therefore missingNumber final eqn. is calculated below;
+     
+    missingNumber = (S + P/S)/2;
+
+    repeating = missingNumber - S;
+
+    vector <int> ans;
+
+    ans.push_back(repeating);
+    ans.push_back(missingNumber);
+
+    return ans;
+}
+
+*/

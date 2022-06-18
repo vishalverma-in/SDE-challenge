@@ -1,0 +1,32 @@
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+       int i = m-1, j = n-1, k = (m+n-1);
+        
+        while(i>=0 && j>=0)
+        {
+            if(nums1[i] > nums2[j])
+                nums1[k--] = nums1[i--];
+            else
+                nums1[k--] = nums2[j--];
+        }
+        
+         for( ; i >= 0; i--)
+        {
+            nums1[k--] = nums1[i];
+        }
+        for( ; j >= 0; j--)
+        {
+            nums1[k--] = nums2[j];
+        }
+        
+    }
+};
+
+/* Approach 
+1. take three pointer i , j , k;
+2. Move i to m-1, j to n-1 and k to m+n-1;
+3. Start comparing the element at i and j and move the greater element at index k and do k--.
+4. Continue loop untill i>=0 and j>=0, when any one of them will move to -1 stop the loop.
+5. Use another two loops to fill the remaining elements of i if j is at -1 and vice versa.
+*/

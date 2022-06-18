@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        int N = m+n-2;
+        int r = m-1;
+        double res = 1;
+        for(int i = 1; i <= r; i++)
+        {
+            res = res* (N-r+i) / i;
+        }
+        return (int)res;
+    }
+};
+
+/* Approach:
+1. For mxn grid, robot has to move exactly m-1 steps down and n-1 steps right and these can be done in any order.
+2. Therefore total ways are : m-1 + n-1 = m+n-2
+3.If you placed or choose the m-1 steps from total ways then n-1 automatically found either can be calculated..
+
+so the final ans is m+n-2 choose m-1.i.e.( (m+n-2 )C (m-1))
+*/

@@ -1,0 +1,53 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode *p = head;
+        int count = 0;
+        while(p != NULL)
+        {
+            p = p->next;
+            count++;
+        }
+        count = count/2;
+        p = head;
+        while(count != 0)
+        {
+            p = p->next;
+            count--;
+        }
+        return p;
+        
+        // optimized:
+        /*
+        ListNode *slow = head, *fast = head;
+        while(fast && fast->next)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+        */
+        
+    }
+};
+
+/* Approach:
+Brute force:
+1. Find the size of the linked list and then return the pointer when it is at the half;
+
+Optimized Sol:
+1. Take two pointer fast and slow, both are at head;
+2. Move fast by two step and slow by one step, it means slow pointer will cover the distance half of the fast pointer.
+3. Run the loop while fast reaches to NULL or fast->next == NULL.
+4. return the slow pointer and it will be the location of the middle elements;
+*/

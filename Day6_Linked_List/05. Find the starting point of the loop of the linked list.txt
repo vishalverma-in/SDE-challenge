@@ -1,0 +1,45 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        ListNode* slow = head, *fast = head, *entry = head;
+        
+        do{
+            if(fast == NULL || fast->next==NULL || fast->next->next==NULL) return NULL;
+            slow = slow->next;
+            fast = fast->next->next;
+        }while(slow!=fast);
+        if(fast==slow)
+        {
+            while(entry!= slow)
+            {
+                entry = entry->next;
+                slow = slow->next;
+            }
+            return slow;
+        }
+        return NULL;
+    }
+};
+
+
+/*Approach:
+1. Use slow and fast pointer to detect the cycle.
+
+Let’s say a slow pointer covers the L2 distance from the starting node of the cycle until it collides with a fast pointer. L1 be the distance traveled by the entry pointer to the starting node of the cycle. So, in total, the slow pointer covers the L1+L2 distance. We know that a fast pointer covers some steps more than a slow pointer. Therefore, we can say that a fast pointer will surely cover the L1+L2 distance. Plus, a fast pointer will cover more steps which will accumulate to nC length where cC is the length of the cycle and n is the number of turns. Thus, the fast pointer covers the total length of L1+L2+nC. 
+
+We know that the slow pointer travels twice the fast pointer. So this makes equation to
+
+2(L1+L2) = L1+L2+nC. This makes equation to
+
+L1+L2 = nC. Moving L2 to the right side
+
+L1 = nC-L2 and this shows why the entry pointer and the slow pointer would collide.
+*/

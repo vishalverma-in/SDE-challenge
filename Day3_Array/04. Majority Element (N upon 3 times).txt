@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        map<int, int> mp;
+        vector<int> res;
+        int n = nums.size();
+        int len = n/3;
+        for(int i = 0; i < n; i++)
+        {
+            mp[nums[i]]++;
+        }
+        
+        for(auto itr = mp.begin(); itr != mp.end(); itr++)
+        {
+            if(itr->second > len) res.push_back(itr->first);
+        }
+        
+        return res;
+    }
+};
+
+/* Approach:
+1. Calculate the n/3 length in the  variable len.
+2. Create a map of int,int and calcualte the frequency of each element;
+3. Iterate through the map and check for the element whoose frequency is greater than len and push them in the vector res;
+4. return the vector res;
+*/

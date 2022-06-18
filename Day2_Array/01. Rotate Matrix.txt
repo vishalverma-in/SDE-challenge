@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        reverse(matrix.begin(), matrix.end());
+        
+        int rows = matrix.size();
+        int cols = matrix[0].size();
+        
+        for(int i = 0; i < rows; i++)
+        {
+            for(int j = i; j < cols; j++)
+            {
+                swap(matrix[i][j], matrix[j][i]);
+            }
+            
+        }
+    }
+};
+
+
+
+/*Approach:
+1. Reverse the matrix rows;
+2. Interchange 01 with 10, 02 with 20 and so on;
+3. Remember while iterating we have to interchange only once so start the inner loop from j=i
+*/

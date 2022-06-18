@@ -1,0 +1,41 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if(list1 == NULL) return list2;
+        if(list2 == NULL) return list1;
+        if(list1->val > list2->val) std::swap(list1, list2);
+        
+        ListNode *res = list1;
+        while(list1 != NULL && list2 != NULL)
+        {
+            ListNode *temp = NULL;
+            while(list1 && list1->val <= list2->val)
+            {
+                temp = list1;
+                list1 = list1->next;
+            }
+            temp->next = list2;
+            std::swap(list1, list2);
+            
+        }
+        return res;
+    }
+};
+
+/* Approach:
+1. We have two pointers list1 and list2.
+2. Move list1 pointer to the node whose value is lesser.
+3. Take a pointer temp initialize it to NULL and for every iteration move temp to list1 and list1 to list1->next, if list1 is lesser than list2.
+4. If list1 is greater than the list 2 then move temp->next to list2 and swap the pointers list1 and list2. Because we always want that list1 is at node with the lesser value.
+5. Return the pointer res which is initialized to first lesser node i.e. list1 in the start of the solution.
+*/

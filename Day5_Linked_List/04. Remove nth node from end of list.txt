@@ -1,0 +1,46 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        // int len = 0;
+        // ListNode* iter = head;
+        // while(iter)
+        // {
+        //     iter = iter->next;
+        //     len++;
+        // }
+        // if(len == n) return head->next;
+        // iter = head;
+        // for(int i = 1; i < len-n; i++) iter = iter->next;
+        // iter->next = iter->next->next;
+        // return head;
+        
+        // Optimized:
+        
+        ListNode* fast = head, *slow = head;
+        for(int i = 0; i < n; i++) fast = fast->next;
+        if(fast == NULL) return head->next;
+        while(fast->next){
+            slow = slow->next;
+            fast = fast->next;
+        }
+        slow->next = slow->next->next;
+        return head;
+    }
+};
+
+/* Approach:
+1. Firstly move a pointer fast to the n step in the linked list.
+2. If fast reaches null it means n = length og the list, therefore from the last we will remove the first string i.e. return head->next;
+3. Then we will move fast to the end and slow to slow->next, at the end of the loop the slow pointer will be at length-n and fast will be at NULL;
+4. Then we will remove the nth node from the end by modifying the link and return the head pointer.
+*/
